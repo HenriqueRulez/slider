@@ -97,7 +97,7 @@ img {
   transition: 0.3s;
 }
 
-.custom-control li .active {
+.custom-control li.active {
   opacity: 1;
   transform: scale(1);
 }

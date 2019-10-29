@@ -5,7 +5,7 @@ export class Slide {
     this.slide = document.querySelector(slide);
     this.wrapper = document.querySelector(wrapper);
     this.dist = {
-      finalPositon: 0,
+      finalPosition: 0,
       startX: 0,
       movement: 0
     };
@@ -24,7 +24,7 @@ export class Slide {
 
   updatePosition(clientX) {
     this.dist.movement = (this.dist.startX - clientX) * 1.6;
-    return this.dist.finalPositon - this.dist.movement;
+    return this.dist.finalPosition - this.dist.movement;
   }
 
   onStart(event) {
@@ -61,7 +61,7 @@ export class Slide {
   onEnd(event) {
     const moveType = event.type === 'mouseup' ? 'mousemove' : 'touchmove';
     this.wrapper.removeEventListener(moveType, this.onMove);
-    this.dist.finalPositon = this.dist.movePosition;
+    this.dist.finalPosition = this.dist.movePosition;
     this.transition(true);
 
     this.changeSlideOnEnd();
@@ -106,13 +106,15 @@ export class Slide {
     const activeSlide = this.slideArray[index];
     this.moveSlide(activeSlide.position);
     this.slidesIndexNav(index);
-    this.dist.finalPositon = activeSlide.position;
+    this.dist.finalPosition = activeSlide.position;
     this.changeActiveClass();
     this.wrapper.dispatchEvent(this.changeEvent);
   }
 
   changeActiveClass() {
-    this.slideArray.forEach(item => item.element.classList.remove('active'));
+    this.slideArray.forEach(item =>
+      item.element.classList.remove(this.activeClass)
+    );
     this.slideArray[this.index.active].element.classList.add(this.activeClass);
   }
 
@@ -161,8 +163,8 @@ export class Slide {
 }
 
 export class SlideNav extends Slide {
-  constructor(...args) {
-    super(...args);
+  constructor(slide, wrapper) {
+    super(slide, wrapper);
     this.bindControlEvents();
   }
   addArrow(prev, next) {
